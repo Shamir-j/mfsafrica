@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- <h1>About</h1>
+
+<h3>{{ title }}</h3>
+<p>This is a template</p>
+
+{{ my_html|safe }}
+
+<p>
+, {{ my_number }}
+{{ my_list }}
+</p>
+
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+
+<ul>
+{% for abc in my_list %}
+    {% if abc == 312 %}
+        <li>{{ forloop.counter }} - {{ abc|add:22 }}</li>
+    {% elif abc == "Abc" %}
+        <li>This is not the network</li>
+    {% else %}
+        <li>{{ forloop.counter }} - {{ abc }}</li>
+    {% endif %}
+    
+    
+{% endfor %}
+</ul> -->
+
+<style>
+    .mCard {
+        width: 100%;
+        border-radius: 3px;
+        background-color: whitesmoke;
+        border: 1px solid seagreen;
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+
+
+    }
+
+    .mCardHeader {
+        width: 100%;
+        height: 40px;
+        background-color: seagreen;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mCardHeader p {
+        color: whitesmoke;
+        font-weight: bold;
+    }
+
+
+    .mForm {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 260px;
+        padding: 30px;
+    }
+
+    .mFormGroup {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .mLabel {
+        color: gray;
+
+    }
+
+    .mInput {
+        height: 38px;
+        border-radius: 4px;
+        border: 2px solid #e5e5e5;
+        padding: 3px;
+        font-weight: bold;
+
+    }
+
+    .mInput:focus {
+        outline: none;
+        border: 2px solid rgb(52, 149, 94);
+        box-shadow: none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+
+    .mButton {
+        margin: 5px;
+        border-radius: 2px;
+        border: none;
+        height: 35px;
+        color: whitesmoke;
+        font-weight: bold;
+        width: 65px;
+
+    }
+
+    .mButton:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+
+
+
+    .bDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mLink {
+        color: seagreen;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .tableContainer {
+        width: 100%;
+        border: 1px solid seagreen;
+        border-radius: 3px;
+        min-height: 300px;
+
+    }
+
+    .mTable {
+        width: 100%;
+    }
+
+    .mThead {
+        background-color: seagreen;
+        height: 40px;
+    }
+
+    .mTh {
+        color: whitesmoke;
+        padding-left: 5px;
+
+    }
+
+    .mTr {
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .mTr:nth-child(odd) {
+        background-color: whitesmoke;
+    }
+
+    .mTr:hover {
+        background-color: #e5e5e5;
+    }
+
+    .mTd {
+        height: 45px;
+        padding-left: 5px;
+
+    }
+</style>
+
+
+<main id="main" class="containerF">
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+        <div class="container">
+
+            <div class="row">
+
+
+                <div class="col-lg-4 pt-2 pt-lg-0 order-2 order-lg-1">
+                    <div class="mCard">
+                        <div class="mCardHeader">
+                            <p>Points String</p>
+                        </div>
+                        <form method="POST" class="Mform">
+                            {% csrf_token %}
+
+
+                            <div class="mFormGroup">
+                                <label class="mLabel" for="points">Points String</label>
+                                <input class="mInput" type="text" placeholder="Enter points string" id="points">
+                            </div>
+
+                            <p>For example, (3,5), (2,3), (4,5), (7,6), (4,5), (8,4)</p>
+
+                            <button class="mButton" type="button" onclick="handleSubmit()"
+                                style="background-color: seagreen; width: 100%;">SUBMIT</button>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-8 order-1 order-lg-2">
+                    <div class="tableContainer">
+
+                        <table class="mTable">
+
+                            <thead class="mThead">
+                                <tr>
+                                    <th class="mTh">Points</th>
+                                    <th class="mTh">Closest Pair</th>
+                                    <th class="mTh">Closest distance</th>
+                                    <th class="mTh">Options</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="mTbody">
+                                <!-- <tr class="mTr">
+                            <td class="mTd">(3,5), (2,3), (4,5), (7,6), (4,5), (8,4)</td>
+                            <td class="mTd">Closest Pair</td>
+                            <td class="mTd">Closest distance</td>
+                            <td class="mTd">
+                               
+                                <button class="mButton" style="background-color: orange;">Edit</button>
+                                <button class="mButton" style="background-color:orangered;">Delete</button>
+
+                            </td>
+                            
+                        </tr>
+
+
+                    
+                        </tr> -->
+
+                            </tbody>
+
+
+
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End About Us Section -->
+</main>
+
+<script>
+
+    function handleSubmit() {
+        var formData = {
+            points: document.getElementById("points").value,
+
+        }
+
+        fetch("https://shamirmfsafrica.herokuapp.com/api-auth/points/", {
+            method: "POST",
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // alert("Registration Successfull, Proced to login");
+                // location.href = '/login';
+                handleGetPoints();
+
+            }).catch(errror => alert(error))
+    }
+
+
+    function handleGetPoints() {
+
+        fetch("https://shamirmfsafrica.herokuapp.com/api-auth/points/", {
+            method: "GET",
+            headers: { 'content-type': 'application/json' },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+
+                var tbody = document.getElementById("mTbody");
+                tbody.innerHTML = '';
+
+                data.forEach(point => {
+
+                    tbody.innerHTML +=
+
+                        `
+              <tr class="mTr">
+                            <td class="mTd">`+ point.points + `</td>
+                            <td class="mTd">`+ point.closetpointpair + `</td>
+                            <td class="mTd">`+ point.closetdistance + `</td>
+                            <td class="mTd">
+    
+                                <button class="mButton" onclick="handleDelete(`+ point.id + `)" style="background-color:orangered;">Delete</button>
+
+                            </td>
+                            
+                        </tr>
+              `;
+
+                });
+
+            }).catch(error => alert(error));
+
+        document.getElementById("points").value = '';
+    }
+
+    handleGetPoints();
+
+    function handleDelete(id) {
+
+        fetch("https://shamirmfsafrica.herokuapp.com/api-auth/pointdetail/" + id + "/", {
+            method: "DELETE",
+            headers: { 'content-type': 'application/json' },
+
+        })
+            .then(response => {
+                handleGetPoints();
+            })
+            .catch(error => alert(error))
+    }
+</script>
+
+
+
+
+{% endblock content %}

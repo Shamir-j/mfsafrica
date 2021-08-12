@@ -1,15 +1,26 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home_view(request, *args, **kwargs): # *args, **kwargs
-    print(args, kwargs)
-    print(request.user)
-    # return HttpResponse("<h1>Hello World</h1>") # string of HTML code
-    return render(request, "home.html", {})
+    if request.user.is_authenticated:
+        print(args, kwargs)
+        print(request.user)
+        user = request.user
+        # return HttpResponse("<h1>Hello World</h1>") # string of HTML code
+        return render(request, "home.html", {"user":user})
 
 def contact_view(request, *args, **kwargs):
     return render(request, "contact.html", {})
+def login_view(request, *args, **kwargs):
+    return render(request, "login.html", {})
+
+def register_view(request, *args, **kwargs):
+    return render(request, "register.html")
+
+def points_view(request, *args, **kwargs):
+    return render(request, "points.html")
 
 
 def about_view(request, *args, **kwargs):

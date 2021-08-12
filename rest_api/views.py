@@ -1,10 +1,61 @@
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, auth
+from django.contrib.auth import logout
+
 from .models import Point
 from .serializers import PointSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 import numpy as np
+
+class PointViewSet(viewsets.ViewSet):
+    def list(self, request):
+        points = Point.objects.all()
+        serializer = PointSerializer(points, many=True)
+        return Response(serializer.data) 
+    def create(self, request):
+
+        pointData= request.data['points']
+        pointData= pointData.replace(" ", "")
+        pointData= pointData.replace("(", "")
+        pointData= pointData.rstrip(pointData[-1])
+       
+        stringArray = pointData.split("),")
+        pointsArray = []
+
+        for i in stringArray:
+            arrayM = i.split(",")
+            arrayM[0] = int(arrayM[0])
+            arrayM[1] = int(arrayM[1])
+            pointsArray.append(arrayM)
+
+        c=find_closest_nest(pointsArray)
+
+        mPoints= "(" + str(c['p1'][0]) + "," + str(c['p1'][1]) +"),("+ str(c['p2'][0]) +","+ str(c['p2'][1])+")"
+      
+        closetpointpair = mPoints
+        distance= c['distance']
+        updated_request = request.data.copy()
+        updated_request.update({'closetpointpair': closetpointpair, 'closetdistance': distance})
+       
+        serializer = PointSerializer(data=updated_request)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        queryset = Point.objects.all()
+        points = get_object_or_404(queryset, pk=pk)
+        serializer = PointSerializer(points)
+        return Response(serializer.data)
+
+   
 # Create your views here.
 def find_closest_brute_force(array):
     result = {}
@@ -177,3 +228,63 @@ class PointDetailAPIView(APIView):
         point = self.get_object(pk)
         point.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+#registration here
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('points')
+        else:
+            messages.info(request, 'Invalid credentials')
+            return redirect('login')
+
+
+    else:
+        return render(request, 'login.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password']
+        password2 = request.POST['cpassword']
+        email = request.POST['email']
+        if password1 == password2:
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'Username taken!')
+                return redirect('register')
+
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, 'Email taken!')
+                return redirect('register')
+
+            else:
+                user = User.objects.create_user(username=username,password=password1, email=email)
+                user.save()
+                print('User created successfully:')
+                return redirect('login')
+        else:
+            messages.info(request, 'Password must match!')
+            return redirect('register')
+
+    else:
+        return render(request, 'register.html')
+
+def logout_view(request):
+    auth.logout(request)
+    request.user.auth_token_delete()
+    return redirect('login')
+
+
+class Logout(APIView):
+    def get(self, request, format=None):
+        logout(request)
+        request.user.auth_token_delete()
+        # return Response(status=status.HTTP_200_OK)
+        return redirect('login')
+    
