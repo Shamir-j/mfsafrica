@@ -173,7 +173,7 @@ function handleSubmit(){
         password : document.getElementById("password").value
     }
 
-    fetch("http://127.0.0.1:8000/apiv2/api/register/", {
+    fetch("https://shamirmfsafrica.herokuapp.com/apiv2/api/register/", {
         method:"POST",
         headers:{'content-type':'application/json'},
         body: JSON.stringify(formData)
