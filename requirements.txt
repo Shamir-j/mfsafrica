@@ -1,5 +1,7 @@
 asgiref==3.4.1
 attrs==21.2.0
+boto3==1.18.19
+botocore==1.21.19
 certifi==2021.5.30
 cffi==1.14.6
 charset-normalizer==2.0.3
@@ -23,6 +25,7 @@ idna==3.2
 inflection==0.5.1
 itypes==1.2.0
 Jinja2==3.0.1
+jmespath==0.10.0
 jsonschema==3.2.0
 knox==0.1.14
 loguru==0.5.3
@@ -36,11 +39,13 @@ Pygments==2.9.0
 PyJWT==2.1.0
 pyparsing==2.4.7
 pyrsistent==0.18.0
+python-dateutil==2.8.2
 pytz==2021.1
 PyYAML==5.4.1
 requests==2.26.0
 ruamel.yaml==0.17.10
 ruamel.yaml.clib==0.2.6
+s3transfer==0.5.0
 shortuuid==1.0.1
 simplejson==3.17.3
 six==1.16.0
