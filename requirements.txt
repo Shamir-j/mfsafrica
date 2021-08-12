@@ -12,6 +12,7 @@ cryptography==3.4.7
 decorator==5.0.9
 dj-database-url==0.5.0
 Django==3.2.5
+django-cors-headers==3.7.0
 django-heroku==0.0.0
 django-rest-knox==4.1.0
 django-rest-swagger==2.2.0

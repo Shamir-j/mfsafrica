@@ -30,8 +30,11 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1']
 
-
-# Application definition
+# CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = ['198.211.99.20', 'localhost', '127.0.0.1'] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+# CORS_ALLOWED_ORIGIN_REGEXES =['198.211.99.20', 'localhost', '127.0.0.1']
+# # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_swagger',
     'rest_framework',
+    'corsheaders',
     # 'rest_framework.authtoken',  # <-- Here
     
     'accounts',
@@ -64,6 +68,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'closetpoint.urls'
