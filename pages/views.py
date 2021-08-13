@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def home_view(request, *args, **kwargs): # *args, **kwargs
-    if request.user.is_authenticated:
-        print(args, kwargs)
-        print(request.user)
-        user = request.user
+    # if request.user.is_authenticated:
+    #     print(args, kwargs)
+    #     print(request.user)
+    #     user = request.user
         # return HttpResponse("<h1>Hello World</h1>") # string of HTML code
-        return render(request, "home.html", {"user":user})
+        # return render(request, "home.html", {"user":user})
+        return render(request, "home.html")
+
 
 def contact_view(request, *args, **kwargs):
     return render(request, "contact.html", {})
