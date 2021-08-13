@@ -52,7 +52,8 @@
   
         <nav id="navbar" class="navbar">
           {% if user %}
-          <li><a class="nav-link scrollto active" href="/">Hi, {{user.username}}</a></li>
+          <!-- <li><a class="nav-link scrollto active" href="/">Hi, {{user.username}}</a></li> -->
+          <li><a class="nav-link scrollto active" href="/"></a></li>
           <li><a class="nav-link scrollto" href="{% url 'login' %}">logout</a></li>
          
           {% else %}
