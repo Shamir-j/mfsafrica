@@ -18,7 +18,7 @@ Closet Pair Point API using Divide and Conquer Algorithm
 
 # To access the application in production
 
-8. https://shamirmfsafrica.herokuapp.com to access the simple application UI. Note the Login button is not working
+8. https://shamirmfsafrica.herokuapp.com/login to access the simple application UI. Note the Login button is not working
 
 9. To test the API in production head to this endpints
 
